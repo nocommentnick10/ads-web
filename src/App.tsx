@@ -10,6 +10,20 @@ export function App() {
         patronymic="Константинович"
         surname="Константинопольский"
       />
+      <WorkerCard
+        statusWorker="inTheLine"
+        name="Константин"
+        avatar=""
+        patronymic="Константинович"
+        surname="Константинопольский"
+      />
+      <WorkerCard
+        statusWorker="outOfLine"
+        name="Константин"
+        avatar=""
+        patronymic="Константинович"
+        surname="Константинопольский"
+      />
     </div>
   )
 }

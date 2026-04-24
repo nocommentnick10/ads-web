@@ -1,5 +1,6 @@
 import { useState } from "react"
 import {
+  REVERSE_WORKER_STATUS_MAP,
   WORKER_STATUS_MAP,
   type IWorkerCard,
   type WORKER_STATUS_MAP_Type_Key,
@@ -37,9 +38,9 @@ export const WorkerCard = ({
     setStatus(WORKER_STATUS_MAP[newStatus])
   }
   const statusColors = {
-    [WORKER_STATUS_MAP["inTheLine"]]: "bg-[#319E4B]",
-    [WORKER_STATUS_MAP["break"]]: "bg-[#F9A811]",
-    [WORKER_STATUS_MAP["outOfLine"]]: "bg-[#ADADAD]",
+    inTheLine: "#319E4B",
+    break: "#F9A811",
+    outOfLine: "#E61641",
   }
 
   return (
@@ -52,10 +53,10 @@ export const WorkerCard = ({
               <img src={avatar} />
             </div>
           ) : (
-            <div
-              className={`max-w-min rounded-full border-2 border-[${statusColors[status]}] bg-white p-[13px]`}
-            >
-              {" "}
+            <div className={status === 'В линии' ? ' max-w-min rounded-full border-2 bg-white p-[13px] border-[#319E4B]': 
+			status === 'Перерыв' ? ' max-w-min rounded-full border-2 bg-white p-[13px] border-[#F9A811]':
+			' max-w-min rounded-full border-2 bg-white p-[13px] border-[#E61641]'}>
+              {/* border- max-w-min rounded-full border-2 bg-white p-[13px] */}
               <UserRound size={30} color="gray" />
             </div>
           )}
@@ -94,34 +95,33 @@ export const WorkerCard = ({
         </div>
 
         {/* USER_FUNCTIONS_DEPENDING_ON_THE_STATUS */}
-        <div>
-          {status === WORKER_STATUS_MAP["inTheLine"] ? (
-            <div className="flex w-full items-center gap-3">
-              <button
-                type="button"
-                className={`flex items-center gap-1 bg-[#F9A811] ${btnTextStyles} rounded-xl pt-2 pr-4 pb-2 pl-3`}
-              >
-                <Clock4 size={24} />
-                <span>Перерыв</span>
-              </button>
-              <button
-                type="button"
-                className={`flex items-center bg-[#ADADAD] ${btnTextStyles} gap-1 rounded-xl pt-2 pr-4 pb-2 pl-3`}
-              >
-                <CircleX size={24} />
-                <span className={`${btnTextStyles}`}>Закрыть смену</span>
-              </button>
-            </div>
-          ) : (
+
+        {status === WORKER_STATUS_MAP["inTheLine"] ? (
+          <div className="flex items-center justify-center gap-3 self-center">
             <button
               type="button"
-              className={`flex w-full items-center justify-center gap-1 rounded-xl bg-[#319E4B] pt-3 pb-3 ${btnTextStyles} `}
+              className={`flex items-center gap-1 bg-[#F9A811] ${btnTextStyles} rounded-xl pt-2 pr-4 pb-2 pl-3`}
             >
-              {/* //TODO сделать вставить иконку телефона */}
-              <span>В линию</span>
+              <Clock4 size={24} />
+              <span>Перерыв</span>
             </button>
-          )}
-        </div>
+            <button
+              type="button"
+              className={`flex items-center bg-[#ADADAD] ${btnTextStyles} gap-1 rounded-xl pt-2 pr-4 pb-2 pl-3`}
+            >
+              <CircleX size={24} />
+              <span className={`${btnTextStyles}`}>Закрыть смену</span>
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            className={`flex w-full items-center justify-center gap-1 rounded-xl bg-[#319E4B] pt-3 pb-3 ${btnTextStyles} `}
+          >
+            {/* //TODO сделать вставить иконку телефона */}
+            <span>В линию</span>
+          </button>
+        )}
       </div>
 
       {/* LEAVE_THE_LINE */}
@@ -132,6 +132,7 @@ export const WorkerCard = ({
         {/* //TODO сделать другую иконку через svgr cli и вставить иконку */}
         <span>Выйти из профиля</span>
         <SquareArrowRightExit size={24} />
+
         {/* INSERT ICON LOG OUT */}
       </button>
     </div>
