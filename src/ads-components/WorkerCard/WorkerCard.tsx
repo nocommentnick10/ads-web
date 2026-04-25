@@ -1,34 +1,28 @@
 import { useState } from "react"
 import {
-  REVERSE_WORKER_STATUS_MAP,
   WORKER_STATUS_MAP,
   type IWorkerCard,
   type WORKER_STATUS_MAP_Type_Key,
 } from "./WorkerCard.type"
-import {
-  ArrowRight,
-  CircleX,
-  Clock4,
-  Phone,
-  SquareArrowRightExit,
-  UserRound,
-} from "lucide-react"
+import { ArrowRight, CircleX, Clock4, UserRound } from "lucide-react"
+import { LogoutIcon } from "../ui/icons/Logout"
+import { PhoneIcon } from "../ui/icons/Phone"
+import { borderStyles, textColors } from "./styles"
 
-export const WorkerCard = ({
+const btnTextStyles = `text-sm text-white font-semibold leading-[18px] tracking-normal cursor-pointer`
+
+export const WorkerCard: React.FC<IWorkerCard> = ({
   surname,
   name,
   patronymic,
   avatar,
   statusWorker,
-  ...props
 }: IWorkerCard) => {
   const initialStatus = WORKER_STATUS_MAP[statusWorker]
 
   //TODO вставить все необходимые иконки, поменять иконку выхода и телефона и сделать конфигурацию svgr cli
 
   const [status, setStatus] = useState<string>(initialStatus)
-
-  const btnTextStyles = `text-sm text-white font-semibold leading-[18px] tracking-normal cursor-pointer`
 
   //   const [timeInWork, setTimeInWork] = useState<>()
 
@@ -37,29 +31,22 @@ export const WorkerCard = ({
     //if response successful => меняем статус в компоненте, иначе показываем ошибку
     setStatus(WORKER_STATUS_MAP[newStatus])
   }
-  const statusColors = {
-    inTheLine: "#319E4B",
-    break: "#F9A811",
-    outOfLine: "#E61641",
-  }
 
   return (
     <div className="flex-col justify-center rounded-2xl bg-[#EBEBEB] shadow-[0_0_15px_0_rgba(0,0,0,0.1)]">
       <div className="rounded-2xl bg-white p-4">
         {/* WORKER__INFO */}
         <div className="mb-8 flex items-center gap-4 font-semibold">
-          {avatar !== null && avatar.length ? (
-            <div>
-              <img src={avatar} />
-            </div>
-          ) : (
-            <div className={status === 'В линии' ? ' max-w-min rounded-full border-2 bg-white p-[13px] border-[#319E4B]': 
-			status === 'Перерыв' ? ' max-w-min rounded-full border-2 bg-white p-[13px] border-[#F9A811]':
-			' max-w-min rounded-full border-2 bg-white p-[13px] border-[#E61641]'}>
-              {/* border- max-w-min rounded-full border-2 bg-white p-[13px] */}
+          <div className={borderStyles[status]}>
+            {avatar !== null && avatar.length ? (
+              <img
+                src={avatar}
+                className="h-14 w-14 self-center rounded-full object-cover"
+              />
+            ) : (
               <UserRound size={30} color="gray" />
-            </div>
-          )}
+            )}
+          </div>
 
           <div className="flex-row gap-3">
             {/* INDICATION__USER__STATUS */}
@@ -83,11 +70,20 @@ export const WorkerCard = ({
               </div>
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1 text-sm font-semibold uppercase">
-                  <Phone size={24} color="#319E4B" />
-                  <div>{status}</div>
+                  {status === WORKER_STATUS_MAP["inTheLine"] ? (
+                    <PhoneIcon color="#319E4B" />
+                  ) : status === WORKER_STATUS_MAP["break"] ? (
+                    <Clock4 fill="#F9A811" stroke="white" />
+                  ) : status === WORKER_STATUS_MAP["outOfLine"] ? (
+                    <CircleX fill="#E61641" stroke="white" />
+                  ) : null}
+
+                  <span className={textColors[status]}>{status}</span>
                 </div>
                 {status === WORKER_STATUS_MAP["outOfLine"] ? null : (
-                  <span className="uppercase">04:52</span>
+                  <span className={`${textColors[status]} uppercase`}>
+                    04:52
+                  </span>
                 )}
               </div>
             </div>
@@ -110,7 +106,7 @@ export const WorkerCard = ({
               className={`flex items-center bg-[#ADADAD] ${btnTextStyles} gap-1 rounded-xl pt-2 pr-4 pb-2 pl-3`}
             >
               <CircleX size={24} />
-              <span className={`${btnTextStyles}`}>Закрыть смену</span>
+              <span className={btnTextStyles}>Закрыть смену</span>
             </button>
           </div>
         ) : (
@@ -118,7 +114,7 @@ export const WorkerCard = ({
             type="button"
             className={`flex w-full items-center justify-center gap-1 rounded-xl bg-[#319E4B] pt-3 pb-3 ${btnTextStyles} `}
           >
-            {/* //TODO сделать вставить иконку телефона */}
+            <PhoneIcon color="white" />
             <span>В линию</span>
           </button>
         )}
@@ -131,7 +127,7 @@ export const WorkerCard = ({
       >
         {/* //TODO сделать другую иконку через svgr cli и вставить иконку */}
         <span>Выйти из профиля</span>
-        <SquareArrowRightExit size={24} />
+        <LogoutIcon size={24} color="gray" />
 
         {/* INSERT ICON LOG OUT */}
       </button>

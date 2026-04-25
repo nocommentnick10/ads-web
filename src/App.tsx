@@ -4,25 +4,25 @@ export function App() {
   return (
     <div className="flex h-screen w-full items-center justify-center">
       <WorkerCard
-        statusWorker="break"
-        name="Константин"
         avatar=""
-        patronymic="Константинович"
         surname="Константинопольский"
-      />
-      <WorkerCard
+        name="Константин"
+        patronymic="Константинович"
         statusWorker="inTheLine"
-        name="Константин"
-        avatar=""
-        patronymic="Константинович"
-        surname="Константинопольский"
       />
       <WorkerCard
-        statusWorker="outOfLine"
-        name="Константин"
         avatar=""
-        patronymic="Константинович"
         surname="Константинопольский"
+        name="Константин"
+        patronymic="Константинович"
+        statusWorker="outOfLine"
+      />
+      <WorkerCard
+        avatar=""
+        surname="Константинопольский"
+        name="Константин"
+        patronymic="Константинович"
+        statusWorker="break"
       />
     </div>
   )
