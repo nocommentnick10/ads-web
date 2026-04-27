@@ -2,7 +2,7 @@ import { WorkerCard } from "./ads-components/WorkerCard"
 
 export function App() {
   return (
-    <div className="flex h-screen w-full items-center justify-center">
+    <div className="flex h-screen w-full flex-col items-center justify-center gap-10">
       <WorkerCard
         avatar=""
         surname="Константинопольский"

@@ -33,15 +33,15 @@ export const WorkerCard: React.FC<IWorkerCard> = ({
   }
 
   return (
-    <div className="flex-col justify-center rounded-2xl bg-[#EBEBEB] shadow-[0_0_15px_0_rgba(0,0,0,0.1)]">
+    <div className="max-w-90 flex-col justify-center rounded-2xl bg-[#EBEBEB] shadow-[0_0_15px_0_rgba(0,0,0,0.1)]">
       <div className="rounded-2xl bg-white p-4">
         {/* WORKER__INFO */}
-        <div className="mb-8 flex items-center gap-4 font-semibold">
+        <div className="mb-4 flex items-center gap-4 font-semibold">
           <div className={borderStyles[status]}>
             {avatar !== null && avatar.length ? (
               <img
                 src={avatar}
-                className="h-14 w-14 self-center rounded-full object-cover"
+                className="h-14 w-14 rounded-full object-fill"
               />
             ) : (
               <UserRound size={30} color="gray" />
@@ -53,7 +53,7 @@ export const WorkerCard: React.FC<IWorkerCard> = ({
             <div className="flex-col justify-items-start gap-3">
               <div>
                 <div className="flex-row items-start">
-                  <div className="flex gap-10">
+                  <div className="flex">
                     <div className="flex-col gap-3">
                       <p>{surname}</p>
                       <div className="flex gap-2">
